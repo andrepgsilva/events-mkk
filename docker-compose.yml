@@ -1,0 +1,12 @@
+services:
+  web:
+    image: node:18-alpine
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+      - HOST=0.0.0.0
+    ports:
+      - 3000:3000
+    volumes:
+      - ./src:/src
+    working_dir: /src
+    command: yarn dev
