@@ -1,5 +1,6 @@
 <template>
   <div class="container d-flex flex-wrap justify-content-center">
+    <button @click="login">Login</button>
     <div v-for="event in events" class="mr-lg-3 mr-md-3 mt-3">
       <Event
         :name="event.name"
@@ -25,5 +26,11 @@ export default Vue.extend({
       return this.$store.getters['events/getEvents'];
     }
   },
+
+  methods: {
+    login() {
+      this.$auth.loginWith("keycloak");
+    }
+  }
 });
 </script>

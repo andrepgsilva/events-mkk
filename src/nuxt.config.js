@@ -35,7 +35,52 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
   ],
+
+  auth: {
+    strategies: {
+      local: false,
+      keycloak: {
+        scheme: "oauth2",
+        endpoints: {
+          authorization:
+            process.env.KEYCLOAK_API_URL +
+            "auth/realms/test-realm/protocol/openid-connect/auth",
+          token:
+            process.env.KEYCLOAK_API_URL +
+            "auth/realms/test-realm/protocol/openid-connect/token",
+          userInfo:
+            process.env.KEYCLOAK_API_URL +
+            "auth/realms/test-realm/protocol/openid-connect/userinfo",
+          logout:
+            process.env.KEYCLOAK_API_URL +
+            "auth/realms/test-realm/protocol/openid-connect/logout?redirect_uri=" +
+            encodeURIComponent("http://localhost:3000/"),
+        },
+        token: {
+          property: "access_token",
+          type: "Bearer",
+          name: "Authorization",
+          maxAge: 300,
+        },
+        refreshToken: {
+          property: "refresh_token",
+          maxAge: 60 * 60 * 24 * 30,
+        },
+        responseType: "code",
+        grantType: "authorization_code",
+        clientId: "test-client",
+        scope: ["openid", "profile", "email"],
+        codeChallengeMethod: "S256",
+      },
+    },
+    redirect: {
+      logout: '/',
+      callback: '/',
+      home: '/'
+    },
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
