@@ -1,11 +1,24 @@
 <script lang="ts" setup>
-  defineProps<{
+  const props = defineProps<{
+    id: string
     name: string
     cover: string
     price: string
     categoryName: string
   }>()
-  </script>
+
+  function addToCart() {
+    const event = {
+      id: props.id,
+      name: props.name,
+      cover: props.cover,
+      price: props.price,
+      categoryName: props.categoryName
+    };
+
+    $nuxt.$store.dispatch('cart/addToCart', event);
+  }
+</script>
   
 <template>
   <b-card
@@ -21,7 +34,8 @@
     </b-card-text>
 
     <div class="d-flex justify-content-end">
-      <b-button href="#" variant="primary">Buy Ticket</b-button>
+      <b-button href="#" variant="primary" @click="addToCart">Buy Ticket</b-button>
     </div>
   </b-card>
 </template>
+

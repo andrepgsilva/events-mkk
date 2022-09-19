@@ -77,8 +77,8 @@ export default {
     },
     redirect: {
       logout: '/',
-      callback: '/',
-      home: '/'
+      home: '/',
+      callback: '/home',
     },
   },
 

@@ -4,9 +4,22 @@ services:
     environment:
       - NODE_OPTIONS=--openssl-legacy-provider
       - HOST=0.0.0.0
+      - KEYCLOAK_API_URL=http://localhost/
     ports:
       - 3000:3000
     volumes:
       - ./src:/src
     working_dir: /src
     command: yarn dev
+
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2
+    ports:
+      - 80:8080
+      - 8443:8443
+    volumes:
+      - ./h2:/tmp

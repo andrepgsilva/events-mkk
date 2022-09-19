@@ -1,13 +1,15 @@
 <template>
-  <Home />
+  
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Home from './home.vue';
 
 export default Vue.extend({
-  name: 'IndexPage',
-  components: { Home },
+  name: 'LoginPage',
+
+  computed: {},
+
+  mounted() {}
 });
 </script>
