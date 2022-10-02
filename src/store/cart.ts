@@ -44,7 +44,7 @@ export const actions = {
       Promise.resolve();
       commit('setCart', []);
 
-      this.$router.push('/order-finished');
+      this.$router.push('/payment');
 
     } catch(error) {
       console.log('Something went wrong...')

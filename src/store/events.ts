@@ -1,32 +1,21 @@
-import { faker } from '@faker-js/faker';
+import axios from 'axios';
 
 interface Event {
-  'id': string,
-  'name': string,
-  'price': string,
-  'cover': string
-  'category_name': string,
+  id: number,
+  name: string,
+  price: string,
+  cover: string
+  category: {
+    id: number,
+    name: string
+  },
 };
 
-const getFakeEvents = async (howMany: number) => {
-  let events = [];
+type State = () => { events: Array<Event> }
 
-  for (let i = 0; i < howMany; i++) {
-    const event: Event = {
-      'id': faker.finance.account(),
-      'name': faker.name.jobArea() + 'Event',
-      'price': faker.finance.amount(5, 90, 2, '€'),
-      'cover': faker.image.abstract(500, 500, true),
-      'category_name': faker.name.firstName(),
-    };
+type ActionParameter = (type: string, payload?: string) => Promise<any>
 
-    events.push(event);
-  }
-
-  return events;
-}
-
-export const state = () => ({
+export const state: State = () => ({
   events: [],
 });
 
@@ -43,11 +32,22 @@ export const mutations = {
 };
 
 export const actions = {
-  async fetchEvents({ state }: { state: any }) {
-    return await getFakeEvents(30);
+  async fetchEvents(): Promise<any> {
+    try {
+      const response = await axios.get('http://laravel.test/api/events', {
+        headers: {
+          accept: 'application/json'
+        }
+      });
+      
+      return response.data;
+      
+    } catch(error) {
+      console.log(error);
+    }
   },
 
-  async addEvents({ dispatch, commit }: { dispatch: any, commit: any }) {
+  async addEvents({ dispatch, commit }: { dispatch: ActionParameter, commit: ActionParameter }) {
     const events = await dispatch('fetchEvents');
 
     commit('setEvents', events);

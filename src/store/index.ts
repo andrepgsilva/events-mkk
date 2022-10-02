@@ -1,5 +1,5 @@
 export const actions =  {
-  nuxtServerInit ({ commit, dispatch }: { commit: any, dispatch: any}, { req }: { req: any }) {
-    dispatch('events/addEvents');
+  async nuxtServerInit ({ commit, dispatch, state }: { commit: any, dispatch: any, state: any}, { req }: { req: any }) {
+    await dispatch('events/addEvents');
   }
 }

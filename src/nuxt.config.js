@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -36,6 +38,10 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    '@nuxt/http',
+    ['nuxt-stripe-module', {
+      publishableKey: process.env.STRIPE_KEY,
+    }],
   ],
 
   auth: {
