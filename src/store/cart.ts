@@ -12,6 +12,10 @@ export const getters = {
   getCart(state: any) {
     return state.cart;
   },
+
+  getCartSize(state: any) {
+    return state.cart.length;
+  },
 };
 
 export const mutations = {

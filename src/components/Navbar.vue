@@ -6,12 +6,22 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item href="#" tag="NuxtLink" to="/">All Events</b-nav-item>
-        <b-nav-item href="#" tag="NuxtLink" to="/cart">Cart</b-nav-item>
+        <b-nav-item href="#" tag="NuxtLink" to="/">Home</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
+        <div class="d-flex justify-content-center align-items-center">
+          <NuxtLink to="/cart">
+            <div class="d-flex justify-content-center align-items-center text-white-50 mr-2 position-relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#fff" class="bi bi-bag-fill" viewBox="0 0 16 16">
+                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"/>
+              </svg>
+              <div class="bag-circle"><span>{{ cartSize }}</span></div>
+            </div>
+          </NuxtLink>
+        </div>
+
         <b-nav-form>
           <b-form-input
             size="sm"
@@ -44,6 +54,12 @@ export default {
     };
   },
 
+  computed: {
+    cartSize() {
+      return this.$store.getters['cart/getCartSize'];
+    }
+  },
+
   methods: {
     login() {
       this.$auth.loginWith('keycloak');
@@ -51,3 +67,24 @@ export default {
   },
 };
 </script>
+
+<style>
+  .bag-circle {
+    position: absolute;
+    top: 13px;
+    left:  12px;
+    width: 20px;
+    height: 20px;
+
+    background: #000000d1;
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bag-circle span {
+    color: #fff;
+  }
+</style>
